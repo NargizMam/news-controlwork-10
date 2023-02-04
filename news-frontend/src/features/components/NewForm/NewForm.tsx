@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Grid, TextField } from '@mui/material';
+import { Grid, TextField } from '@mui/material';
 import { ApiNews } from '../../../type';
 import FileInput from '../../../components/UI/FileInput/FileInput';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -29,7 +29,7 @@ const NewForm: React.FC<Props> = ({onSubmit, loading}) => {
     const {name, files} = e.target;
     setState(prevState => ({
       ...prevState,
-      [name]:files && files[0] ? files[0]: null,
+      [name]: files && files[0] ? files[0] : null,
     }))
   };
   return (
@@ -42,6 +42,7 @@ const NewForm: React.FC<Props> = ({onSubmit, loading}) => {
           <TextField
             id="title" label="Title"
             value={state.title}
+            required
             onChange={inputChangeHandler}
             name="title"
           />
@@ -51,6 +52,7 @@ const NewForm: React.FC<Props> = ({onSubmit, loading}) => {
             multiline rows={3}
             id="description" label="Description"
             value={state.description}
+            required
             onChange={inputChangeHandler}
             name="description"
           />
@@ -59,10 +61,11 @@ const NewForm: React.FC<Props> = ({onSubmit, loading}) => {
           <FileInput
             onChange={fileInputChangeHandler}
             name="image"
-            label='Image'/>
+            label="Image"/>
         </Grid>
         <Grid item xs>
           <LoadingButton loading={loading}
+                         disabled={state.title === '' || state.description === ''}
                          type="submit" color="primary"
                          variant="contained">Create</LoadingButton>
         </Grid>

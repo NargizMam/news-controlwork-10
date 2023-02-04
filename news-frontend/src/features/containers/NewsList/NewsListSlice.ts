@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { News, NewsMutation } from '../../../type';
-import { deleteNews, fetchNewsList, fetchOneNews } from './NewsLstThunk';
+import { createNews, deleteNews, fetchNewsList, fetchOneNews } from './NewsLstThunk';
 import { RootState } from '../../../app/store';
 
 interface NewsState {
@@ -45,6 +45,7 @@ export const NewsListSlice = createSlice({
     });
     builder.addCase(deleteNews.rejected, (state) => {
       state.deleting = false;
+      state.callbackMessage = '';
     });
     builder.addCase(fetchOneNews.pending, (state) => {
       state.oneFetching = true;
@@ -55,6 +56,17 @@ export const NewsListSlice = createSlice({
     });
     builder.addCase(fetchOneNews.rejected, (state) => {
       state.oneFetching = false;
+    });
+    builder.addCase(createNews.pending, (state) => {
+      state.creating = true;
+    });
+    builder.addCase(createNews.fulfilled, (state, {payload: message}) => {
+      state.creating = false;
+      state.callbackMessage = message;
+    });
+    builder.addCase(createNews.rejected, (state) => {
+      state.creating = false;
+      state.callbackMessage = '';
     });
 
   }

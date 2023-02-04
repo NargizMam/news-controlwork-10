@@ -10,10 +10,10 @@ newsRouter.get('/', async (req, res) => {
     const connection = await mysqlDb.getConnection();
     const result = await connection.query('SELECT id, title, image, dateStart FROM news');
     const newsList = result[0] as News[];
-    res.send(newsList);
+    await res.send(newsList);
 });
 newsRouter.get('/:id', async (req, res) => {
-    const connection = mysqlDb.getConnection();
+    const connection = await  mysqlDb.getConnection();
     const result = await connection.query(
         'SELECT * FROM news WHERE id = ?', [req.params.id]);
     const newsList = result[0] as News[];
@@ -21,7 +21,7 @@ newsRouter.get('/:id', async (req, res) => {
     if(!news) {
         return res.status(404).send({ERROR: 'News not found!'});
     }
-    res.send(news);
+    await  res.send(news);
 });
 newsRouter.post('/', imagesUpload.single('image') ,async (req, res) => {
     if(!req.body.title || !req.body.description){
@@ -32,10 +32,10 @@ newsRouter.post('/', imagesUpload.single('image') ,async (req, res) => {
         description: req.body.description,
         image: req.file ? req.file.filename : null,
     }
-    const connection = mysqlDb.getConnection();
+    const connection = await mysqlDb.getConnection();
     const result = await connection.query(
-        'INSERT INTO news (title, description) VALUES (?, ?)',
-        [newsData.title, newsData.description]
+        'INSERT INTO news (title, description, image) VALUES (?, ?, ?)',
+        [newsData.title, newsData.description, newsData.image]
     );
     const info = result[0] as OkPacket;
     res.send({
@@ -48,7 +48,7 @@ newsRouter.delete('/:id', async (req, res) => {
         'DELETE FROM ?? WHERE id = ?',
         ['news', req.params.id]
     );
-     res.send(`News post if = ${req.params.id}  was deleted!` );
+     await res.send(`News post if = ${req.params.id}  was deleted!` );
 });
 
 

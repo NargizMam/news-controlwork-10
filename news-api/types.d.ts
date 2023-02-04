@@ -10,3 +10,14 @@ export interface ApiNews {
     description: string,
     image?: string | null,
 }
+export interface Comment {
+    id: number,
+    news_id: number,
+    authors: string,
+    text: string,
+}
+export interface ApiComment {
+    news_id: number,
+    authors: string,
+    text: string,
+}

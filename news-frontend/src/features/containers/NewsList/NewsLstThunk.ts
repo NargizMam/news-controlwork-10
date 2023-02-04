@@ -21,7 +21,7 @@ export const fetchOneNews = createAsyncThunk<News, string>(
     return newsInfo;
   }
 )
-export const createNews = createAsyncThunk<void, ApiNews>(
+export const createNews = createAsyncThunk<string, ApiNews>(
   'news/create',
   async (newsMutation) => {
     const formData = new FormData();
@@ -34,12 +34,14 @@ export const createNews = createAsyncThunk<void, ApiNews>(
         formData.append(key, value);
       }
     });
-    return axiosApi.post('/news', formData);
+    const message =  await axiosApi.post('/news', formData);
+    return message.data;
   }
 );
 export const deleteNews = createAsyncThunk<string, string>(
   'news/delete/:id',
   async (id) => {
-    return  await axiosApi.delete('/news/' + id);
+    const message = await axiosApi.delete('/news/' + id);
+    return message.data;
   }
 )

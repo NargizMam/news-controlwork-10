@@ -6,15 +6,18 @@ import { fetchOneNews } from '../NewsLstThunk';
 import { Container, Grid, Paper, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import { apiUrl } from '../../../../constants';
-
+import noImageAvailable from '../../../../assets/images/noImage.jpg'
 
 const NewsInfo= () => {
   const dispatch = useAppDispatch();
   const {id} = useParams();
   const newsInfo = useAppSelector(selectNewsInfo);
-  const dateAt = dayjs(newsInfo?.datetimeAt).format('DD-MM-YYYY {HH:mm}')
-  const imagePath = apiUrl + '/' + newsInfo?.image;
-  console.log(imagePath)
+  const dateAt = dayjs(newsInfo?.datetimeAt).format('DD-MM-YYYY {HH:mm}');
+
+  let imagePath: string = noImageAvailable
+  if (newsInfo?.image) {
+    imagePath = apiUrl + '/' + newsInfo.image;
+  }
 
   useEffect(() => {
     if (id){

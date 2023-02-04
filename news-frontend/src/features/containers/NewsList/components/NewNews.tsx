@@ -20,8 +20,8 @@ const NewNews = () => {
   return (
     <Container>
       <Grid item xs={12} sm={6} md={4} lg={3}>
-      <Typography variant="h4" sx={{mb: 2}}>Add new post</Typography>
-      <NewForm onSubmit={onFormSubmit} loading={creating}/>
+        <Typography variant="h4" sx={{m: 5}}>Add new post</Typography>
+        <NewForm onSubmit={onFormSubmit} loading={creating}/>
       </Grid>
     </Container>
   );
