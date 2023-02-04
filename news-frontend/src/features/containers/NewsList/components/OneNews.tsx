@@ -32,7 +32,6 @@ const OneNews: React.FC<Props> = ({id, title, image, dateStart}) => {
   const dispatch = useAppDispatch();
   const deleting = useAppSelector(selectDeleting);
   const callbackMessage = useAppSelector(selectCallbackMessage);
-
   let imagePath: string = noImageAvailable
   if (image) {
     imagePath = apiUrl + '/' + image;
