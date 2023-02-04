@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { Button, Grid, TextField } from '@mui/material';
 import { ApiNews } from '../../../type';
+import FileInput from '../../../components/UI/FileInput/FileInput';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 interface Props {
   onSubmit: (mutation: ApiNews) => void;
+  loading: boolean
 }
 
-const ProductForm: React.FC<Props> = ({onSubmit}) => {
-  const [state, setState] = useState<ProductMutation>({
+const NewForm: React.FC<Props> = ({onSubmit, loading}) => {
+  const [state, setState] = useState<ApiNews>({
     title: '',
     description: '',
     image: null,
@@ -17,7 +20,7 @@ const ProductForm: React.FC<Props> = ({onSubmit}) => {
     onSubmit(state);
   };
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = e.target;;
+    const {name, value} = e.target;
     setState(prevState => {
       return {...prevState, [name]: value};
     });
@@ -45,14 +48,6 @@ const ProductForm: React.FC<Props> = ({onSubmit}) => {
         </Grid>
         <Grid item xs>
           <TextField
-            id="price" label="Price"
-            value={state.price}
-            onChange={inputChangeHandler}
-            name="price"
-          />
-        </Grid>
-        <Grid item xs>
-          <TextField
             multiline rows={3}
             id="description" label="Description"
             value={state.description}
@@ -67,10 +62,12 @@ const ProductForm: React.FC<Props> = ({onSubmit}) => {
             label='Image'/>
         </Grid>
         <Grid item xs>
-          <Button type="submit" color="primary" variant="contained">Create</Button>
+          <LoadingButton loading={loading}
+                         type="submit" color="primary"
+                         variant="contained">Create</LoadingButton>
         </Grid>
       </Grid>
     </form>
   );
 };
-export default ProductForm;
+export default NewForm;

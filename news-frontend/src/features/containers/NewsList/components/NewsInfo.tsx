@@ -14,6 +14,7 @@ const NewsInfo= () => {
   const newsInfo = useAppSelector(selectNewsInfo);
   const dateAt = dayjs(newsInfo?.datetimeAt).format('DD-MM-YYYY {HH:mm}')
   const imagePath = apiUrl + '/' + newsInfo?.image;
+  console.log(imagePath)
 
   useEffect(() => {
     if (id){
@@ -25,10 +26,10 @@ const NewsInfo= () => {
     <Container >
       <Grid item xs={12} sm={6} md={4} lg={3}>
         <Paper  variant="outlined"  square sx={{padding: "15px"}}>
-          <img src={imagePath} alt=""/>
+          <img src={imagePath} alt={newsInfo.title}/>
           <Typography variant="h5">{newsInfo.title}</Typography>
-          {newsInfo ? <Typography>At {dateAt}</Typography> : null}
           <Typography variant="body2">{newsInfo.description}</Typography>
+          {newsInfo ? <Typography>At {dateAt}</Typography> : null}
         </Paper>
         <Typography margin={3}>Comments</Typography>
           <Typography margin={3}>Add new comments</Typography>
