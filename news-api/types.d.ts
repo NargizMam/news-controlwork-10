@@ -3,7 +3,7 @@ export interface News {
     title: string,
     description: string,
     image?: string | null,
-    datetimeAt: string
+    dateStart: string
 }
 export interface ApiNews {
     title: string,

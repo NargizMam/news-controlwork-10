@@ -2,12 +2,13 @@ import express from "express";
 import mysqlDb from "../mysqlDb";
 import {ApiNews, News} from "../types";
 import {OkPacket} from "mysql2";
+import {imagesUpload} from "../multer";
 
 const newsRouter = express.Router();
 
 newsRouter.get('/', async (req, res) => {
     const connection = await mysqlDb.getConnection();
-    const result = await connection.query('SELECT id, title FROM news');
+    const result = await connection.query('SELECT id, title, image, dateStart FROM news');
     const newsList = result[0] as News[];
     res.send(newsList);
 });
@@ -22,13 +23,14 @@ newsRouter.get('/:id', async (req, res) => {
     }
     res.send(news);
 });
-newsRouter.post('/', async (req, res) => {
-    if(!req.body.title){
+newsRouter.post('/', imagesUpload.single('image') ,async (req, res) => {
+    if(!req.body.title || !req.body.description){
         return res.status(404).send({ERROR: 'Title field is required!'});
     }
     const newsData: ApiNews = {
         title: req.body.title,
-        description: req.body.description
+        description: req.body.description,
+        image: req.file ? req.file.filename : null,
     }
     const connection = mysqlDb.getConnection();
     const result = await connection.query(
@@ -40,6 +42,13 @@ newsRouter.post('/', async (req, res) => {
         ...newsData,
         id: info.insertId,
     });
+});
+newsRouter.delete('/:id', async (req, res) => {
+    await mysqlDb.getConnection().query(
+        'DELETE FROM ?? WHERE id = ?',
+        ['news', req.params.id]
+    );
+     res.send(`News post if = ${req.params.id}  was deleted!` );
 });
 
 

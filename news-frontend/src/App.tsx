@@ -1,26 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import AppToolBar from './components/UI/AppToolBar/AppToolBar';
+import { CssBaseline } from '@mui/material';
+import NewsPortal from './features/containers/newsPortal/newsPortal';
+import NewsInfo from './features/containers/NewsList/components/NewsInfo';
+import NewNews from './features/containers/NewsList/components/NewNews';
 
-function App() {
-  return (
+const App = () => (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <CssBaseline/>
+      <AppToolBar/>
+        <Routes>
+            <Route path="/" element={<NewsPortal/>}/>
+            <Route path="/news/:id" element={<NewsInfo/>}/>
+            <Route path="/add-news" element={<NewNews/>}/>
+        </Routes>
     </div>
-  );
-}
+);
 
 export default App;

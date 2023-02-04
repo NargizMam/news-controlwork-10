@@ -1,0 +1,6 @@
+#root{
+  background: rgb(12,138,134);
+  background: linear-gradient(180deg, rgba(12,138,134,1) 0%,
+  rgba(216,231,231,1) 17%, rgba(140,158,156,0.16010154061624648) 98%);
+  min-height: 1200px;
+}
