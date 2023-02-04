@@ -23,7 +23,7 @@ const NewsInfo= () => {
     if (id){
       dispatch(fetchOneNews(id));
     }
-  }, [id]);
+  }, [dispatch, id]);
 
   return newsInfo && (
     <Container >

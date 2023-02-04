@@ -13,7 +13,7 @@ const NewsList = () => {
 
   useEffect(() => {
     dispatch(fetchNewsList());
-  }, []);
+  }, [dispatch]);
 
   const oneNews = newsList.map(news => (
     <OneNews key={news.id}
